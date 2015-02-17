@@ -26,6 +26,12 @@ import time
 global rgb1
 global rgb2
 global rgb3
+
+global rScale
+global gScale
+global bScale 
+global sScale
+global brightScale
        
 rgb1 = [0,0,0]
 rgb2 = [0,0,0]
@@ -35,16 +41,12 @@ rgb3 = [0,0,0]
 class PyApp(gtk.Window):
 
     def __init__(self):
-        global rScale
-        global gScale
-        global bScale 
-        global sScale
-        global brightScale
+        
         
         super(PyApp, self).__init__()
 
-        #self.serialPort = "/dev/tty.usbmodem621"
-        self.serialPort = "COM5"
+        self.serialPort = "COM13"
+        #serial.tools.list_ports
         
         self.set_title("RGB Control")
         self.set_size_request(260, 240)
@@ -175,8 +177,7 @@ class PyApp(gtk.Window):
 
         self.connect("destroy", lambda w: gtk.main_quit())
         self.show_all()
-        
-
+        #self.serialPort = "COM13"
 
     def on_changed(self, widget):
         
