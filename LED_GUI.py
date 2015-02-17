@@ -247,10 +247,8 @@ class PyApp(gtk.Window):
         name = widget.get_name()
         
         if name == "speed":
-            speed = int(val)
             sSpin.set_value(int(val))
         elif name == "bright":
-            brightness = int(val)
             brightSpin.set_value(int(val))
             
         elif strand == 1:
@@ -293,6 +291,8 @@ class PyApp(gtk.Window):
             self.ser.write(str(strand) + ',' + str(rgb3[0]) + ',' +  str(rgb3[1]) + ',' + str(rgb3[2])+'\n')   
  
     def spin_changed(self,widget):
+        global speed
+        global brightness
         val = widget.get_value_as_int()
         name = widget.get_name()
         
@@ -303,8 +303,10 @@ class PyApp(gtk.Window):
         elif name == "blue":
             bScale.set_value(val)
         elif name == "speed":
+            speed=val
             sScale.set_value(val)
         elif name == "bright":
+            brightness=val
             brightScale.set_value(val)
                            
 
@@ -335,11 +337,9 @@ class PyApp(gtk.Window):
         global gScale
         global bScale
         
-        if button.get_name() == "connect":
-            self.serialPort = portList.get_active_text()
-            self.setup_serial()
         
-        elif button.get_name() == "clear":
+        
+        if button.get_name() == "clear":
             self.ser.write(str(strand)+"c")
             rScale.set_value(0)
             gScale.set_value(0)
@@ -360,6 +360,10 @@ class PyApp(gtk.Window):
 
         elif button.get_name() == "jump":
             self.ser.write(str(strand)+"j,"+str(speed)+'\n')
+
+        elif button.get_name() == "connect":
+            self.serialPort = portList.get_active_text()
+            self.setup_serial()
                     
     def setup_serial(self):
         self.ser = serial.Serial()
