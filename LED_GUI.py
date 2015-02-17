@@ -30,13 +30,21 @@ global rgb2
 global rgb3
 
 global rScale
+rScale = gtk.HScale()
 global gScale
-global bScale 
+gScale = gtk.HScale()
+global bScale
+bScale = gtk.HScale()
 global sScale
+sScale = gtk.HScale()
 global brightScale
+brightScale = gtk.HScale()
 
 global portList
-       
+portList = gtk.combo_box_new_text()
+
+
+      
 rgb1 = [0,0,0]
 rgb2 = [0,0,0]
 rgb3 = [0,0,0]
@@ -60,7 +68,6 @@ class PyApp(gtk.Window):
         #Serial Selector
         ports = self.serial_ports()
         serialTable = gtk.Table(1,2,False)
-        portList = gtk.combo_box_new_text()
         for port in ports:
             portList.append_text(port)
         connectButton = gtk.Button("Connect")
@@ -90,8 +97,7 @@ class PyApp(gtk.Window):
         rHbox = gtk.HBox(True,0)
         rLabel = gtk.Label("Red: ")
         rHbox.pack_start(rLabel)   
-             
-        rScale = gtk.HScale()
+        
         rScale.set_name("red")
         rScale.set_range(0, 255)
         rScale.set_increments(1, 10)
@@ -106,7 +112,6 @@ class PyApp(gtk.Window):
         gLabel = gtk.Label("Green: ")
         gHbox.pack_start(gLabel)   
         
-        gScale = gtk.HScale()
         gScale.set_name("green")
         gScale.set_range(0, 255)
         gScale.set_increments(1, 10)
@@ -120,8 +125,7 @@ class PyApp(gtk.Window):
         bHbox = gtk.HBox(True,0)       
         bLabel = gtk.Label("Blue: ")
         bHbox.pack_start(bLabel)   
-        
-        bScale = gtk.HScale()
+
         bScale.set_name("blue")
         bScale.set_range(0, 255)
         bScale.set_increments(1, 10)
@@ -136,7 +140,6 @@ class PyApp(gtk.Window):
         sLabel = gtk.Label("Speed: ")
         sHbox.pack_start(sLabel)
         
-        sScale = gtk.HScale()
         sScale.set_name("speed")
         sScale.set_range(0,255)
         sScale.set_increments(1, 5)
@@ -151,7 +154,6 @@ class PyApp(gtk.Window):
         brightLabel = gtk.Label("Brightness: ")
         brightHbox.pack_start(brightLabel)
         
-        brightScale = gtk.HScale()
         brightScale.set_name("bright")
         brightScale.set_range(0,255)
         brightScale.set_increments(1, 10)
