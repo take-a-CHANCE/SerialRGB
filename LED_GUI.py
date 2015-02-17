@@ -73,7 +73,7 @@ class PyApp(gtk.Window):
         
 
         self.set_title("RGB Control")
-        self.set_size_request(260, 240)
+        self.set_size_request(300, 275)
         self.set_position(gtk.WIN_POS_CENTER)
     
         headerVbox = gtk.VBox(True,0)
@@ -109,8 +109,8 @@ class PyApp(gtk.Window):
         buttonTable.attach(button3, 2,3,0,1)
         
         #Red slider
-        rHbox = gtk.HBox(False,0)
-        rLabel = gtk.Label("Red: ")
+        rHbox = gtk.HBox(True,0)
+        rLabel = gtk.Label("Red:         ")
         rHbox.pack_start(rLabel)
         
         rText.set_visibility(True)
@@ -130,8 +130,8 @@ class PyApp(gtk.Window):
         rHbox.pack_end(rScale)
         
         #green slider
-        gHbox = gtk.HBox(False,0)
-        gLabel = gtk.Label("Green: ")
+        gHbox = gtk.HBox(True,0)
+        gLabel = gtk.Label("Green:       ")
         gHbox.pack_start(gLabel)
         
         gText.set_visibility(True)
@@ -151,8 +151,8 @@ class PyApp(gtk.Window):
         gHbox.pack_end(gScale)
         
         #blue slider
-        bHbox = gtk.HBox(False,0)       
-        bLabel = gtk.Label("Blue: ")
+        bHbox = gtk.HBox(True,0)       
+        bLabel = gtk.Label("Blue:        ")
         bHbox.pack_start(bLabel)
         
         bText.set_visibility(True)
@@ -172,8 +172,8 @@ class PyApp(gtk.Window):
         bHbox.pack_end(bScale)
         
         #speed slider
-        sHbox = gtk.HBox(False,0)
-        sLabel = gtk.Label("Speed: ")
+        sHbox = gtk.HBox(True,0)
+        sLabel = gtk.Label("Speed:       ")
         sHbox.pack_start(sLabel)
 
         sText.set_visibility(True)
@@ -193,7 +193,7 @@ class PyApp(gtk.Window):
         sHbox.pack_end(sScale)
         
         #brightness slider
-        brightHbox = gtk.HBox(False,0)
+        brightHbox = gtk.HBox(True,0)
         brightLabel = gtk.Label("Brightness: ")
         brightHbox.pack_start(brightLabel)
 
