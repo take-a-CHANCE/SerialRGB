@@ -13,7 +13,7 @@ Requires PySerial and PyGTK
 5/15/14: Clear now sets scales to zero, switching between strands makes scales move to stored previous values 
         by making scales global variables; added brightness slider and blink functionality
 5/16/14: Final debugging, added bright and speed scales to clear function
-2/16/15: Adding a COM Port selector
+2/16/15: Added a COM Port selector and Jump button
 
 ****************************************
 
@@ -28,6 +28,11 @@ import glob
 global rgb1
 global rgb2
 global rgb3
+
+global speed
+speed=0
+global brightness
+brightness=0
 
 global rScale
 rScale = gtk.HScale()
@@ -59,7 +64,6 @@ class PyApp(gtk.Window):
         self.set_title("RGB Control")
         self.set_size_request(260, 240)
         self.set_position(gtk.WIN_POS_CENTER)
-        #self.setup_serial()
     
         headerVbox = gtk.VBox(True,0)
         headerLabel1 = gtk.Label("RGB Control App for Arduino")
@@ -164,7 +168,7 @@ class PyApp(gtk.Window):
         brightHbox.pack_end(brightScale)
         
         #function buttons
-        boxTable = gtk.Table(1,3,False)
+        boxTable = gtk.Table(1,4,False)
         
         fadeButton = gtk.Button("Fade")
         fadeButton.set_name("fade")
@@ -178,9 +182,14 @@ class PyApp(gtk.Window):
         blinkButton.set_name("blink")
         blinkButton.connect("clicked", self.on_button)
 
+        jumpButton = gtk.Button("Jump")
+        jumpButton.set_name("jump")
+        jumpButton.connect("clicked", self.on_button)
+
         boxTable.attach(fadeButton, 0,1,0,1)
         boxTable.attach(blinkButton, 1,2,0,1)
-        boxTable.attach(clearButton, 2,3,0,1)
+        boxTable.attach(jumpButton, 2,3,0,1)
+        boxTable.attach(clearButton, 3,4,0,1)
         
         #main app building
         vbox = gtk.VBox(True,0)
@@ -199,14 +208,8 @@ class PyApp(gtk.Window):
 
         self.connect("destroy", lambda w: gtk.main_quit())
         self.show_all()
-        #self.serialPort = "COM13"
 
-    def on_changed(self, widget):
-        
-        global speed
-        global brightness
-
-        
+    def on_changed(self, widget):        
         val = widget.get_value()
         name = widget.get_name()
         
@@ -285,6 +288,7 @@ class PyApp(gtk.Window):
         if button.get_name() == "connect":
             self.serialPort = portList.get_active_text()
             self.setup_serial()
+        
         elif button.get_name() == "clear":
             self.ser.write(str(strand)+"c")
             rScale.set_value(0)
@@ -292,8 +296,7 @@ class PyApp(gtk.Window):
             bScale.set_value(0)
             sScale.set_value(0)
             brightScale.set_value(0)
-            
-            
+                    
         elif button.get_name() == "fade":
             self.ser.write(str(strand)+"f,"+str(speed)+','+str(brightness)+'\n')    
             
@@ -304,6 +307,9 @@ class PyApp(gtk.Window):
                 self.ser.write(str(strand)+"b,"+str(speed)+','+str(rgb2[0])+','+str(rgb2[1])+','+str(rgb2[2])+'\n')
             elif strand == 3:
                 self.ser.write(str(strand)+"b,"+str(speed)+','+str(rgb3[0])+','+str(rgb3[1])+','+str(rgb3[2])+'\n')
+
+        elif button.get_name() == "jump":
+            self.ser.write(str(strand)+"j,"+str(speed)+'\n')
                     
     def setup_serial(self):
         self.ser = serial.Serial()
