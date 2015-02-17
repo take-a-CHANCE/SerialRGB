@@ -1,2 +1,3 @@
 # SerialRGB
-A Python app and Arduino Code used for controlling 12v RGB LEDs over serial communication
+Arduino Code (from within Visual Studio) to control Strands of 12v RGB LED strips over serial communication
+Also contains Python code for a desktop gui
