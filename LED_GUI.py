@@ -293,7 +293,9 @@ class PyApp(gtk.Window):
     def spin_changed(self,widget):
         val = widget.get_value_as_int()
         name = widget.get_name()
-        
+        global speed
+        global brightness
+
         if name == "red":
             rScale.set_value(val)
         elif name == "green":
