@@ -14,6 +14,7 @@ Requires PySerial and PyGTK
         by making scales global variables; added brightness slider and blink functionality
 5/16/14: Final debugging, added bright and speed scales to clear function
 2/16/15: Added a COM Port selector and Jump button
+2/16/15: work on adding text box entry for nums
 
 ****************************************
 
@@ -48,8 +49,9 @@ brightScale = gtk.HScale()
 global portList
 portList = gtk.combo_box_new_text()
 
+global sText
+sText = gtk.Entry(4)   
 
-      
 rgb1 = [0,0,0]
 rgb2 = [0,0,0]
 rgb3 = [0,0,0]
@@ -61,6 +63,7 @@ class PyApp(gtk.Window):
 
         super(PyApp, self).__init__()
         
+
         self.set_title("RGB Control")
         self.set_size_request(260, 240)
         self.set_position(gtk.WIN_POS_CENTER)
@@ -140,16 +143,22 @@ class PyApp(gtk.Window):
         bHbox.pack_end(bScale)
         
         #speed slider
-        sHbox = gtk.HBox(True,0)
+        sHbox = gtk.HBox(False,0)
         sLabel = gtk.Label("Speed: ")
         sHbox.pack_start(sLabel)
+
+        sText.set_visibility(True)
+        sText.set_width_chars(4)
+        sText.set_name("speed")
+        sText.connect("activate", self.text_changed)
+        sHbox.pack_start(sText)
         
         sScale.set_name("speed")
-        sScale.set_range(0,255)
+        sScale.set_range(0,9999)
         sScale.set_increments(1, 5)
         sScale.set_digits(0)
-        sScale.set_size_request(180, 35)
-        sScale.set_value_pos(gtk.POS_LEFT)
+        sScale.set_size_request(130, 35)
+        sScale.set_draw_value(False)
         sScale.connect("value-changed", self.on_changed)
         sHbox.pack_end(sScale)
         
@@ -213,20 +222,21 @@ class PyApp(gtk.Window):
         val = widget.get_value()
         name = widget.get_name()
         
-        if strand == 1:
+        if name == "speed":
+            speed = int(val)
+            sText.set_text(str(speed))
+        elif name == "bright":
+            brightness = int(val)
+            
+        elif strand == 1:
             if name == "red":
                 rgb1[0] = int(val)
             elif name == "green":
                 rgb1[1] = int(val)
             elif name == "blue":
                 rgb1[2] = int(val)
-            elif name == "speed":
-                speed = int(val)
-            elif name == "bright":
-                brightness = int(val)
             
-            if not (name == "speed" or name == "bright"):
-                self.ser.write(str(strand) + ',' + str(rgb1[0]) + ',' +  str(rgb1[1]) + ',' + str(rgb1[2])+'\n')
+            self.ser.write(str(strand) + ',' + str(rgb1[0]) + ',' +  str(rgb1[1]) + ',' + str(rgb1[2])+'\n')
                 
         elif strand == 2:
             if name == "red":
@@ -235,13 +245,8 @@ class PyApp(gtk.Window):
                 rgb2[1] = int(val)
             elif name == "blue":
                 rgb2[2] = int(val)
-            elif name == "speed":
-                speed = int(val)
-            elif name == "bright":
-                brightness = int(val)
             
-            if not (name == "speed" or name == "bright"):
-                self.ser.write(str(strand) + ',' + str(rgb2[0]) + ',' +  str(rgb2[1]) + ',' + str(rgb2[2])+'\n')
+            self.ser.write(str(strand) + ',' + str(rgb2[0]) + ',' +  str(rgb2[1]) + ',' + str(rgb2[2])+'\n')
                 
         elif strand == 3:
             if name == "red":
@@ -255,10 +260,16 @@ class PyApp(gtk.Window):
             elif name == "bright":
                 brightness = int(val)
             
-            if not (name == "speed" or name == "bright"):
-                self.ser.write(str(strand) + ',' + str(rgb3[0]) + ',' +  str(rgb3[1]) + ',' + str(rgb3[2])+'\n')   
+            self.ser.write(str(strand) + ',' + str(rgb3[0]) + ',' +  str(rgb3[1]) + ',' + str(rgb3[2])+'\n')   
         
-        
+    def text_changed(self, widget):
+        val = int(widget.get_text())
+        name = widget.get_name()
+
+        if name == "speed":
+            sScale.set_value(val)
+            speed = val
+              
     def radio_buttons(self, button, name):
         global rScale
         global gScale
@@ -284,7 +295,7 @@ class PyApp(gtk.Window):
         global rScale
         global gScale
         global bScale
-          
+        
         if button.get_name() == "connect":
             self.serialPort = portList.get_active_text()
             self.setup_serial()
