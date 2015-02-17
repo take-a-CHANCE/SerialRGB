@@ -49,6 +49,14 @@ brightScale = gtk.HScale()
 global portList
 portList = gtk.combo_box_new_text()
 
+global rText
+rText =gtk.Entry(3)
+global gText
+gText =gtk.Entry(3)
+global bText
+bText =gtk.Entry(3)
+global brightText
+brightText= gtk.Entry(3)
 global sText
 sText = gtk.Entry(4)   
 
@@ -101,44 +109,65 @@ class PyApp(gtk.Window):
         buttonTable.attach(button3, 2,3,0,1)
         
         #Red slider
-        rHbox = gtk.HBox(True,0)
+        rHbox = gtk.HBox(False,0)
         rLabel = gtk.Label("Red: ")
-        rHbox.pack_start(rLabel)   
+        rHbox.pack_start(rLabel)
+        
+        rText.set_visibility(True)
+        rText.set_width_chars(3)
+        rText.set_text("0")
+        rText.set_name("red")
+        rText.connect("activate", self.text_changed)
+        rHbox.pack_start(rText)   
         
         rScale.set_name("red")
         rScale.set_range(0, 255)
         rScale.set_increments(1, 10)
         rScale.set_digits(0)
-        rScale.set_size_request(180, 35)
-        rScale.set_value_pos(gtk.POS_LEFT)
+        rScale.set_size_request(130, 35)
+        rScale.set_draw_value(False)
         rScale.connect("value-changed", self.on_changed)
         rHbox.pack_end(rScale)
         
         #green slider
-        gHbox = gtk.HBox(True,0)
+        gHbox = gtk.HBox(False,0)
         gLabel = gtk.Label("Green: ")
-        gHbox.pack_start(gLabel)   
+        gHbox.pack_start(gLabel)
+        
+        gText.set_visibility(True)
+        gText.set_width_chars(3)
+        gText.set_text("0")
+        gText.set_name("green")
+        gText.connect("activate", self.text_changed)
+        gHbox.pack_start(gText)   
         
         gScale.set_name("green")
         gScale.set_range(0, 255)
         gScale.set_increments(1, 10)
         gScale.set_digits(0)
-        gScale.set_size_request(180, 35)
-        gScale.set_value_pos(gtk.POS_LEFT)
+        gScale.set_size_request(130, 35)
+        gScale.set_draw_value(False)
         gScale.connect("value-changed", self.on_changed)
         gHbox.pack_end(gScale)
         
         #blue slider
-        bHbox = gtk.HBox(True,0)       
+        bHbox = gtk.HBox(False,0)       
         bLabel = gtk.Label("Blue: ")
-        bHbox.pack_start(bLabel)   
+        bHbox.pack_start(bLabel)
+        
+        bText.set_visibility(True)
+        bText.set_width_chars(3)
+        bText.set_text("0")
+        bText.set_name("blue")
+        bText.connect("activate", self.text_changed)
+        bHbox.pack_start(bText)   
 
         bScale.set_name("blue")
         bScale.set_range(0, 255)
         bScale.set_increments(1, 10)
         bScale.set_digits(0)
-        bScale.set_size_request(180, 35)
-        bScale.set_value_pos(gtk.POS_LEFT)
+        bScale.set_size_request(130, 35)
+        bScale.set_draw_value(False)
         bScale.connect("value-changed", self.on_changed)
         bHbox.pack_end(bScale)
         
@@ -149,6 +178,7 @@ class PyApp(gtk.Window):
 
         sText.set_visibility(True)
         sText.set_width_chars(4)
+        sText.set_text("0")
         sText.set_name("speed")
         sText.connect("activate", self.text_changed)
         sHbox.pack_start(sText)
@@ -163,16 +193,23 @@ class PyApp(gtk.Window):
         sHbox.pack_end(sScale)
         
         #brightness slider
-        brightHbox = gtk.HBox(True,0)
+        brightHbox = gtk.HBox(False,0)
         brightLabel = gtk.Label("Brightness: ")
         brightHbox.pack_start(brightLabel)
+
+        brightText.set_visibility(True)
+        brightText.set_width_chars(3)
+        brightText.set_text("0")
+        brightText.set_name("bright")
+        brightText.connect("activate", self.text_changed)
+        brightHbox.pack_start(brightText)
         
         brightScale.set_name("bright")
         brightScale.set_range(0,255)
         brightScale.set_increments(1, 10)
         brightScale.set_digits(0)
-        brightScale.set_size_request(180, 35)
-        brightScale.set_value_pos(gtk.POS_LEFT)
+        brightScale.set_size_request(130, 35)
+        brightScale.set_draw_value(False)
         brightScale.connect("value-changed", self.on_changed)
         brightHbox.pack_end(brightScale)
         
@@ -224,51 +261,106 @@ class PyApp(gtk.Window):
         
         if name == "speed":
             speed = int(val)
-            sText.set_text(str(speed))
+            sText.set_text(str(val))
         elif name == "bright":
             brightness = int(val)
+            brightText.set_text(str(val))
             
         elif strand == 1:
             if name == "red":
+                rText.set_text(str(val))
                 rgb1[0] = int(val)
             elif name == "green":
+                gText.set_text(str(val))
                 rgb1[1] = int(val)
             elif name == "blue":
+                bText.set_text(str(val))
                 rgb1[2] = int(val)
             
             self.ser.write(str(strand) + ',' + str(rgb1[0]) + ',' +  str(rgb1[1]) + ',' + str(rgb1[2])+'\n')
                 
         elif strand == 2:
             if name == "red":
+                rText.set_text(str(val))
                 rgb2[0] = int(val)
             elif name == "green":
+                gText.set_text(str(val))
                 rgb2[1] = int(val)
             elif name == "blue":
+                bText.set_text(str(val))
                 rgb2[2] = int(val)
             
             self.ser.write(str(strand) + ',' + str(rgb2[0]) + ',' +  str(rgb2[1]) + ',' + str(rgb2[2])+'\n')
                 
         elif strand == 3:
             if name == "red":
+                rText.set_text(str(val))
                 rgb3[0] = int(val)
             elif name == "green":
+                gText.set_text(str(val))
                 rgb3[1] = int(val)
             elif name == "blue":
+                bText.set_text(str(val))
                 rgb3[2] = int(val)
-            elif name == "speed":
-                speed = int(val)
-            elif name == "bright":
-                brightness = int(val)
             
             self.ser.write(str(strand) + ',' + str(rgb3[0]) + ',' +  str(rgb3[1]) + ',' + str(rgb3[2])+'\n')   
         
     def text_changed(self, widget):
         val = int(widget.get_text())
         name = widget.get_name()
-
+        if val<0:
+            val=0
         if name == "speed":
             sScale.set_value(val)
             speed = val
+        elif name == "bright":
+            if val>255:
+                val=255
+            brightScale.set_value(val)
+        elif name == "red":
+            rScale.set_value(val)
+        elif name == "green":
+            gScale.set_value(val)
+        elif name == "blue":
+            bScale.set_value(val)
+
+        if strand == 1:
+            if val >255:
+                val=255
+            if name == "red":
+                rgb1[0] = val
+            elif name == "green":
+                rgb1[1] = val
+            elif name == "blue":
+                rgb1[2] = val
+            
+                
+        elif strand == 2:
+            if val >255:
+                val=255
+            if name == "red":
+                rgb2[0] = val
+            elif name == "green":
+                rgb2[1] = val
+            elif name == "blue":
+                rgb2[2] = val
+            
+                
+        elif strand == 3:
+            if val >255:
+                val=255
+            if name == "red":
+                rgb3[0] = val
+            elif name == "green":
+                rgb3[1] = val
+            elif name == "blue":
+                rgb3[2] = val
+            elif name == "speed":
+                speed = val
+            elif name == "bright":
+                brightness = val
+            
+
               
     def radio_buttons(self, button, name):
         global rScale
