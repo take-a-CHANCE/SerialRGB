@@ -247,10 +247,8 @@ class PyApp(gtk.Window):
         name = widget.get_name()
         
         if name == "speed":
-            speed = int(val)
             sSpin.set_value(int(val))
         elif name == "bright":
-            brightness = int(val)
             brightSpin.set_value(int(val))
             
         elif strand == 1:
@@ -303,8 +301,10 @@ class PyApp(gtk.Window):
         elif name == "blue":
             bScale.set_value(val)
         elif name == "speed":
+            speed = val
             sScale.set_value(val)
         elif name == "bright":
+            brightness = val
             brightScale.set_value(val)
                            
 
@@ -359,7 +359,7 @@ class PyApp(gtk.Window):
                 self.ser.write(str(strand)+"b,"+str(speed)+','+str(rgb3[0])+','+str(rgb3[1])+','+str(rgb3[2])+'\n')
 
         elif button.get_name() == "jump":
-            self.ser.write(str(strand)+"j,"+str(speed)+'\n')
+            self.ser.write(strand+"j,"+speed+'\n')
                     
     def setup_serial(self):
         self.ser = serial.Serial()
