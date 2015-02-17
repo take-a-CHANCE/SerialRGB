@@ -306,33 +306,33 @@ class PyApp(gtk.Window):
             self.ser.write(str(strand) + ',' + str(rgb3[0]) + ',' +  str(rgb3[1]) + ',' + str(rgb3[2])+'\n')   
         
     def text_changed(self, widget):
-        val = int(widget.get_text())
+        val = widget.get_text()
         name = widget.get_name()
-        if val<0:
+        if int(val)<0:
             val=0
         if name == "speed":
             sScale.set_value(val)
-            speed = val
+            speed = int(val)
         elif name == "bright":
             if val>255:
                 val=255
-            brightScale.set_value(val)
+            brightScale.set_value(int(val))
         elif name == "red":
-            rScale.set_value(val)
+            rScale.set_value(int(val))
         elif name == "green":
-            gScale.set_value(val)
+            gScale.set_value(int(val))
         elif name == "blue":
-            bScale.set_value(val)
+            bScale.set_value(int(val))
 
         if strand == 1:
-            if val >255:
+            if int(val) >255:
                 val=255
             if name == "red":
-                rgb1[0] = val
+                rgb1[0] = int(val)
             elif name == "green":
-                rgb1[1] = val
+                rgb1[1] = int(val)
             elif name == "blue":
-                rgb1[2] = val
+                rgb1[2] = int(val)
             
                 
         elif strand == 2:
