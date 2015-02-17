@@ -359,7 +359,7 @@ class PyApp(gtk.Window):
                 self.ser.write(str(strand)+"b,"+str(speed)+','+str(rgb3[0])+','+str(rgb3[1])+','+str(rgb3[2])+'\n')
 
         elif button.get_name() == "jump":
-            self.ser.write(strand+"j,"+speed+'\n')
+            self.ser.write(str(strand)+"j,"+str(speed)+'\n')
                     
     def setup_serial(self):
         self.ser = serial.Serial()
