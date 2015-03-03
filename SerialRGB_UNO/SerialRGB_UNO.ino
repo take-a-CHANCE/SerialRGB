@@ -179,190 +179,43 @@ void blinky(int s, int delayVal, int r, int g, int b) {
 	}
 }
 
-void fade(int strand, int delayVal, int brightness){
+void fade(int strand, int delayVal, int brightness) {
 	int r, g, b;
 	constrain(brightness, 1, 255);
 	while (getOut != true){
-		if (Serial.available()>0){
+		if (Serial.available() > 0){
 			getOut = true;
 			break;
 		}
-		if (strand == 1){
-
-			// fade from blue to violet
-			for (r = 0; r <= brightness; r++) {
-				analogWrite(red1, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from violet to red
-			for (b = brightness; b >= 0; b--) {
-				analogWrite(blue1, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from red to yellow
-			for (g = 0; g <= brightness; g++) {
-				analogWrite(green1, g);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from yellow to green
-			for (r = brightness; r >= 0; r--) {
-				analogWrite(red1, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from green to teal
-			for (b = 0; b <= brightness; b++) {
-				analogWrite(blue1, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from teal to blue
-			for (g = brightness; g >= 0; g--) {
-				analogWrite(green1, g);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
+		// blue to violet
+		for (r = 0; r <= brightness; r++) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
 		}
-		else if (strand == 2){
-
-			// fade from blue to violet
-			for (r = 0; r <= brightness; r++) {
-				analogWrite(red2, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from violet to red
-			for (b = brightness; b >= 0; b--) {
-				analogWrite(blue2, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from red to yellow
-			for (g = 0; g <= brightness; g++) {
-				analogWrite(green2, g);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from yellow to green
-			for (r = brightness; r >= 0; r--) {
-				analogWrite(red2, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from green to teal
-			for (b = 0; b <= brightness; b++) {
-				analogWrite(blue2, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from teal to blue
-			for (g = brightness; g >= 0; g--) {
-				analogWrite(green2, g);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
+		// violet to red
+		for (b = brightness; b >= 0; b--) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
 		}
-		else if (strand == 3){
-
-			// fade from blue to violet
-			for (r = 0; r <= brightness; r++) {
-				analogWrite(red1, r);
-				analogWrite(red2, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from violet to red
-			for (b = brightness; b >= 0; b--) {
-				analogWrite(blue1, b);
-				analogWrite(blue2, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from red to yellow
-			for (g = 0; g <= brightness; g++) {
-				analogWrite(green1, g);
-				analogWrite(green2, g);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from yellow to green
-			for (r = brightness; r >= 0; r--) {
-				analogWrite(red1, r);
-				analogWrite(red2, r);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from green to teal
-			for (b = 0; b <= brightness; b++) {
-				analogWrite(blue1, b);
-				analogWrite(blue2, b);
-				delay(delayVal);
-			}
-			if (Serial.available()>0){
-				getOut = true;
-				break;
-			}
-			// fade from teal to blue
-			for (g = brightness; g >= 0; g--) {
-				analogWrite(green1, g);
-				analogWrite(green2, g);
-				delay(delayVal);
-			}
+		// red to yellow 
+		for (g = 0; g <= brightness; g++) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
 		}
-		if (Serial.available()>0){
-			getOut = true;
-			break;
+		// yellow to green
+		for (r = brightness; r >= 0; r--) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
+		}
+		// green to teal
+		for (b = 0; b <= brightness; b++) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
+		}
+		// teal to blue
+		for (g = brightness; g >= 0; g--) {
+			setColor(strand, r, g, b);
+			delay(delayVal);
 		}
 	}
 }
