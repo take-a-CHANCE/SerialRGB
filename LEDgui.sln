@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialRGB_UNO", "SerialRGB_
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialRGB_LeonardoBT", "SerialRGB_LeonardoBT\SerialRGB_LeonardoBT.vcxproj", "{B1B1212C-35F6-4E22-B9A2-0D60D56FDE03}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialRGB_Multitask", "..\..\Arduino\SerialRGB_Multitask\SerialRGB_Multitask.vcxproj", "{4D7FE852-7F42-4D1D-9734-18656351A735}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SerialRGB_Multitask", "SerialRGB_Multitask\SerialRGB_Multitask.vcxproj", "{4D7FE852-7F42-4D1D-9734-18656351A735}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
