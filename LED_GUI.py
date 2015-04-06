@@ -234,7 +234,7 @@ class PyApp(gtk.Window):
         vbox.pack_start(gHbox)
         vbox.pack_start(bHbox)
         vbox.pack_start(sHbox)
-        vbox.pack_start(brightHbox)
+        #vbox.pack_start(brightHbox)
         vbox.pack_end(boxTable)
         
         self.add(vbox)
@@ -248,9 +248,9 @@ class PyApp(gtk.Window):
         
         if name == "speed":
             sSpin.set_value(int(val))
-        elif name == "bright":
-            brightSpin.set_value(int(val))
-            
+        #elif name == "bright":
+            #brightSpin.set_value(int(val))
+              
         elif strand == 1:
             if name == "red":
                 rSpin.set_value(int(val))
@@ -308,9 +308,7 @@ class PyApp(gtk.Window):
         elif name == "bright":
             brightness = val
             brightScale.set_value(val)
-                           
-
-              
+                                     
     def radio_buttons(self, button, name):
         global rScale
         global gScale
@@ -331,7 +329,6 @@ class PyApp(gtk.Window):
                 gScale.set_value(rgb3[1])
                 bScale.set_value(rgb3[2])
     
-    
     def on_button(self, button):
         global rScale
         global gScale
@@ -347,7 +344,7 @@ class PyApp(gtk.Window):
             gScale.set_value(0)
             bScale.set_value(0)
             sScale.set_value(0)
-            brightScale.set_value(0)
+            #brightScale.set_value(0)
                     
         elif button.get_name() == "fade":
             self.ser.write(str(strand)+"f,"+str(speed)+','+str(brightness)+'\n')    
@@ -370,6 +367,14 @@ class PyApp(gtk.Window):
         self.ser.open()
         if (self.ser.isOpen()):
             print "Serial Open"
+            message = gtk.MessageDialog(parent=None, 
+                            flags=gtk.DIALOG_MODAL, 
+                            type=gtk.MESSAGE_INFO, 
+                            buttons=gtk.BUTTONS_OK, 
+                            message_format="Connected")
+            message.set_position(gtk.WIN_POS_CENTER)
+            message.run()
+            message.destroy()
         else:
             print "Serial Closed"
 
