@@ -105,7 +105,7 @@ public:
 		Increment();
 	}
 
-	void Jump(uint8_t interval) {
+	void Jump(uint16_t interval) {
 		ActivePattern = JUMP;
 		Interval = interval;
 		TotalSteps = 3;
@@ -124,7 +124,7 @@ public:
 		Increment();
 	}
 
-	void Blink(uint32_t color, uint8_t interval) {
+	void Blink(uint32_t color, uint16_t interval) {
 		ActivePattern = BLINK;
 		Color1 = color;
 		Interval = interval;
@@ -273,7 +273,7 @@ void loop()
 }
 
 //------------------------------------------------------------
-//Completion Routines - get called on completion of a pattern
+//Completion Routines - get called on completion of a pattern (pretty much just fade)
 //------------------------------------------------------------
 
 void Strip1Complete() {
