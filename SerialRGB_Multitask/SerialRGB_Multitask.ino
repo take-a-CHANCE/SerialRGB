@@ -129,9 +129,10 @@ public:
 		Color1 = color;
 		Interval = interval;
 		TotalSteps = 2;
+		Index = 0;
 	}
 	void BlinkUpdate() {
-		if (Index = 1) {
+		if (Index == 1) {
 			ColorSet(Color1);
 		}
 		else {
